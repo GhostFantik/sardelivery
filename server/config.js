@@ -5,4 +5,5 @@ module.exports = {
     port: 3000,
     // eslint-disable-next-line no-undef
     modelsFolder: (`${__dirname}/Models/`),
+    forceSyncDb: false // migration DB
 };

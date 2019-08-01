@@ -19,6 +19,7 @@ app.use((err, req, res, next) => {
     res.status(500).end();
 });
 
+// start app
 db.connect(() => {
     db.syncAll(() => // TODO: only for developing
         app.listen(config.port, () =>

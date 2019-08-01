@@ -10,7 +10,7 @@ exports.get = function (callback) {
     callback(sequelize, Sequelize);
 };
 exports.syncAll = function(callback){
-    sequelize.sync({force: false}).then(() => {
+    sequelize.sync({force: config.forceSyncDb}).then(() => {
         console.log('Database sync is successful!');
         callback();
     }).catch((err) => console.log(`Database sync error: ${err}`));

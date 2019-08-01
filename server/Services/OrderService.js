@@ -57,6 +57,7 @@ exports.completeOrder = function (obj, callback) {
  *
  * @param obj Input data
  * @param obj.comments Comments
+ * @param obj.id Id
  * @param callback Callback
  */
 exports.rejectOrder = function (obj, callback) {
@@ -67,5 +68,25 @@ exports.rejectOrder = function (obj, callback) {
     };
     ModelInitializer.Order.update(data, {where: { id: obj.id }})
         .then(res => callback(res))
+        .catch(err => {throw err;});
+};
+/**
+ *
+ * @param callback
+ */
+exports.getAllOrder = function(callback){
+    ModelInitializer.Order.findAll({raw: true})
+        .then(result => callback(result))
+        .catch(err => {throw err;});
+};
+/**
+ *
+ * @param id
+ * @param callback
+ */
+exports.getOrderById = function(id, callback){
+    ValidationSchemes.getOrderById.validate({id: id}, (err, value) => {if(err !== null) throw err;});
+    ModelInitializer.Order.findByPk(id)
+        .then(result => callback(result))
         .catch(err => {throw err;});
 };
