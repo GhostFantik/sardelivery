@@ -61,3 +61,7 @@ typings/
 .next
 
 .idea
+
+#my
+package-lock.json
+.eslintrc.json
