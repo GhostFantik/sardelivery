@@ -9,6 +9,15 @@ const app = express();
 
 app.use(express.json());
 
+app.use((req, res, next) => {
+    res.set({
+        'Access-Control-Allow-Origin': config.frontendUrl,
+        'Access-Control-Allow-Methods': 'POST, GET',
+        'Access-Control-Allow-Headers': '*',
+    });
+    next();
+});
+
 // routers
 app.use('/api/orders', OrderController);
 

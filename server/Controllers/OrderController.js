@@ -4,10 +4,13 @@ const router = require('express').Router();
 const OrderService = require('../Services/OrderService');
 
 router.get('/', (req, res) => {
-    OrderService.getAllOrder(result => res.json(result));
+    if(req.query.status === undefined)
+        OrderService.getAllOrder(result => res.json(result));
+    else
+        OrderService.getAllOrderWithStatus(Number(req.query.status), result => res.json(result));
 });
 router.get('/:id', (req, res) => {
-    OrderService.getOrderById(req.params['id'], result => {
+    OrderService.getOrderById(Number(req.params['id']), result => {
         if(result === null)
             res.json({});
         else
@@ -16,30 +19,43 @@ router.get('/:id', (req, res) => {
 });
 router.post('/', (req, res) => {
     let obj = {
+        name: req.body.name,
         address: req.body.address,
         body: req.body.body,
         paymentMethod: req.body.paymentMethod,
     };
     OrderService.addOrder(obj, result => res.json(result));
 });
-router.update('/confirm', (req, res) => {
+router.post('/setPrice', (req, res) => {
     let obj = {
         id: req.body.id,
         price: req.body.price,
     };
-    OrderService.confirmOrder(obj, result => res.json(result));
+    OrderService.setPriceOrder(obj, result => res.json(result));
 });
-router.update('/completeOrder', (req, res) => {
+router.post('/confirm', (req, res) => {
+    let obj = {
+        id: req.query.id,
+    };
+    OrderService.setPriceOrder(obj, result => res.json(result));
+});
+router.post('/complete', (req, res) => {
     let obj = {
         id: req.query.id,
     };
     OrderService.completeOrder(obj, result => res.json(result));
 });
-router.update('/rejectOrder', (req, res) => {
+router.post('/rejectByClient', (req, res) => {
+    let obj = {
+        id: req.body.id,
+    };
+    OrderService.rejectOrderByClient(obj, result => res.json(result));
+});
+router.post('/rejectByAdmin', (req, res) => {
     let obj = {
         id: req.body.id,
         comments: req.body.comments,
     };
-    OrderService.rejectOrder(obj, result => res.json(result));
+    OrderService.rejectOrderByAdmin(obj, result => res.json(result));
 });
 module.exports = router;

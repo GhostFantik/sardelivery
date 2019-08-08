@@ -1,5 +1,6 @@
 'use strict';
 
+
 const Sequelize = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
@@ -10,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             unique: true,
             autoIncrement: true,
+            allowNull: false,
+        },
+        name: {
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         address: {
