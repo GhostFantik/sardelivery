@@ -65,3 +65,5 @@ typings/
 #my
 package-lock.json
 .eslintrc.json
+.editorconfig
+.test.js

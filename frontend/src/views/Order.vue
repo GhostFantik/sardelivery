@@ -65,7 +65,7 @@ export default {
   methods: {
     async getOrder() {
       try {
-        const result = await axios.get(`${config.apiUrl + this.id}`);
+        const result = await axios.get(`${config.apiUrl}orders/${this.id}`);
         this.order = result.data;
       } catch (e) {
         console.log(e.message);
@@ -78,7 +78,7 @@ export default {
             id: this.order.id,
             price: this.order.price,
           };
-          const result = await axios.post(`${config.apiUrl}setPrice`, obj);
+          const result = await axios.post(`${config.apiUrl}orders/setPrice`, obj);
           this.closeDialog();
         }
       } catch (e) {
@@ -91,7 +91,7 @@ export default {
           id: this.order.id,
           comments: this.order.comments,
         };
-        const result = await axios.post(`${config.apiUrl}rejectByAdmin`, obj);
+        const result = await axios.post(`${config.apiUrl}orders/rejectByAdmin`, obj);
         this.closeDialog();
       } catch (e) {
         console.log(e.message);
@@ -99,7 +99,7 @@ export default {
     },
     async completeOrder() {
       try {
-        const result = await axios.post(`${config.apiUrl}complete?id=${this.order.id}`);
+        const result = await axios.post(`${config.apiUrl}orders/complete?id=${this.order.id}`);
         this.closeDialog();
       } catch (e) {
         console.log(e.message);

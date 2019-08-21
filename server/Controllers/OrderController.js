@@ -2,14 +2,15 @@
 
 const router = require('express').Router();
 const OrderService = require('../Services/OrderService');
+const passport = require('passport');
 
-router.get('/', (req, res) => {
+router.get('/', passport.authenticate('jwt', {session: false}), (req, res) => {
     if(req.query.status === undefined)
         OrderService.getAllOrder(result => res.json(result));
     else
         OrderService.getAllOrderWithStatus(Number(req.query.status), result => res.json(result));
 });
-router.get('/:id', (req, res) => {
+router.get('/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
     OrderService.getOrderById(Number(req.params['id']), result => {
         if(result === null)
             res.json({});
@@ -17,7 +18,7 @@ router.get('/:id', (req, res) => {
             res.json(result);
     });
 });
-router.post('/', (req, res) => {
+router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
     let obj = {
         name: req.body.name,
         address: req.body.address,
@@ -26,32 +27,32 @@ router.post('/', (req, res) => {
     };
     OrderService.addOrder(obj, result => res.json(result));
 });
-router.post('/setPrice', (req, res) => {
+router.post('/setPrice', passport.authenticate('jwt', {session: false}), (req, res) => {
     let obj = {
         id: req.body.id,
         price: req.body.price,
     };
     OrderService.setPriceOrder(obj, result => res.json(result));
 });
-router.post('/confirm', (req, res) => {
+router.post('/confirm', passport.authenticate('jwt', {session: false}), (req, res) => {
     let obj = {
         id: req.query.id,
     };
     OrderService.setPriceOrder(obj, result => res.json(result));
 });
-router.post('/complete', (req, res) => {
+router.post('/complete', passport.authenticate('jwt', {session: false}), (req, res) => {
     let obj = {
         id: req.query.id,
     };
     OrderService.completeOrder(obj, result => res.json(result));
 });
-router.post('/rejectByClient', (req, res) => {
+router.post('/rejectByClient', passport.authenticate('jwt', {session: false}), (req, res) => {
     let obj = {
         id: req.body.id,
     };
     OrderService.rejectOrderByClient(obj, result => res.json(result));
 });
-router.post('/rejectByAdmin', (req, res) => {
+router.post('/rejectByAdmin', passport.authenticate('jwt', {session: false}), (req, res) => {
     let obj = {
         id: req.body.id,
         comments: req.body.comments,

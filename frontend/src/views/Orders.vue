@@ -12,7 +12,8 @@
         </tr>
       </thead>
       <tbody>
-      <tr v-for="(item, index) in orders" :key="`order${index}`">
+      <tr v-for="(item, index) in orders" :key="`order${index}`"
+          :class="statusNames[item.status].color">
         <td>{{item.id}}</td>
         <td>{{item.name}}</td>
         <td>{{item.address}}</td>
@@ -41,8 +42,11 @@ export default {
   methods: {
     async getOrders() {
       try {
-        const result = await axios.get(`${config.apiUrl}`);
+        const result = await axios.get(`${config.apiUrl}orders/`);
         this.orders = result.data;
+        this.orders.sort(
+          (a, b) => (this.statusNames[a.status].priority - this.statusNames[b.status].priority),
+        );
       } catch (e) {
         console.log(e.message);
       }

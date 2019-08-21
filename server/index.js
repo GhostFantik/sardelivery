@@ -1,14 +1,18 @@
 'use strict';
 
 const express = require('express');
+const passport = require('./passport');
 const config = require('./config');
 const db = require('./db');
 const OrderController = require('./Controllers/OrderController');
+const AdminController = require('./Controllers/AdminController');
 
 const app = express();
 
 app.use(express.json());
+app.use(passport.initialize());
 
+// CORS
 app.use((req, res, next) => {
     res.set({
         'Access-Control-Allow-Origin': config.frontendUrl,
@@ -20,6 +24,7 @@ app.use((req, res, next) => {
 
 // routers
 app.use('/api/orders', OrderController);
+app.use('/api/admin', AdminController); // only for develop!
 
 // error
 // eslint-disable-next-line no-unused-vars
