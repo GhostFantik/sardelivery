@@ -1,8 +1,11 @@
 'use strict';
+
 const ModelInitializer = require('../Models/ModelInitializer');
 const ValidationSchemes = require('../ValidationSchemes/OrderValidationSchemes');
+const OrderEmitter = require('../Socket.IO/Emitters/OrderEmitter');
 /**
  * @param obj Input data
+ * @param obj.vkId Vk id
  * @param obj.name Name
  * @param obj.address Address
  * @param obj.body Order description
@@ -12,6 +15,7 @@ const ValidationSchemes = require('../ValidationSchemes/OrderValidationSchemes')
 exports.addOrder = function (obj, callback) { // TODO: make a VK notification for administrator
     ValidationSchemes.addOrderScheme.validate(obj, (err, value) => {if(err !== null) throw err;});
     let order = {
+        vkId: obj.vkId,
         name: obj.name,
         address: obj.address,
         body: obj.body,
@@ -37,7 +41,10 @@ exports.setPriceOrder = function (obj, callback) {
         status: 1,
     };
     ModelInitializer.Order.update(data, {where: { id: obj.id }})
-        .then(res => callback(res))
+        .then(res => {
+            callback(res);
+            OrderEmitter.setPriceOrder(obj.id);
+        })
         .catch(err => {throw err;});
 };
 /**
@@ -67,7 +74,10 @@ exports.completeOrder = function (obj, callback) {
         status: 3,
     };
     ModelInitializer.Order.update(data, {where: { id: obj.id }})
-        .then(res => callback(res))
+        .then(res => {
+            callback(res);
+            OrderEmitter.completeOrder(obj.id);
+        })
         .catch(err => {throw err;});
 };
 /**
@@ -99,7 +109,10 @@ exports.rejectOrderByAdmin = function (obj, callback) {
         status: 5,
     };
     ModelInitializer.Order.update(data, {where: { id: obj.id }})
-        .then(res => callback(res))
+        .then(res => {
+            callback(res);
+            OrderEmitter.rejectOrderByAdmin(obj.id);
+        })
         .catch(err => {throw err;});
 };
 /**

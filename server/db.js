@@ -16,7 +16,7 @@ exports.syncAll = function(callback){
     }).catch((err) => console.log(`Database sync error: ${err}`));
 };
 exports.connect = function (callback) {
-    sequelize = new Sequelize(config.db); // TODO: make a pool
+    sequelize = new Sequelize(config.db, {logging: false}); // TODO: make a pool
     sequelize.authenticate()
         .then(() => {
             console.log('Database connection is successful!');

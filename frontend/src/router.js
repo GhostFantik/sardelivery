@@ -14,6 +14,7 @@ const router = new Router({
     {
       path: '/',
       name: 'home',
+      redirect: '/orders',
       meta: { requireAuth: true },
     },
     {

@@ -11,6 +11,7 @@
                   <h3>Описание: {{order.body}}</h3>
                   <h4>Адрес: {{order.address}}</h4>
                   <h5>Метод оплаты: {{order.paymentMethod}}</h5>
+                  <h5>Vk ID: {{order.vkId}}</h5>
                   <h5>Статус: {{statusNames[order.status].name}}</h5>
                 </v-card-text>
               </v-flex>

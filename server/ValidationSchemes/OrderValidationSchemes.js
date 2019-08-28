@@ -3,6 +3,7 @@
 const Joi = require('@hapi/joi');
 
 exports.addOrderScheme = Joi.object().keys({
+    vkId: Joi.number().required(),
     name: Joi.string().required(),
     address: Joi.string().required(),
     body: Joi.string().required(),

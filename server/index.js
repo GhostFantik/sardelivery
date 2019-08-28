@@ -1,13 +1,19 @@
 'use strict';
 
 const express = require('express');
+const http = require('http');
 const passport = require('./passport');
 const config = require('./config');
 const db = require('./db');
+const socket = require('./Socket.IO/socket');
 const OrderController = require('./Controllers/OrderController');
 const AdminController = require('./Controllers/AdminController');
 
 const app = express();
+const server = http.createServer(app);
+
+socket.initialize(server);
+
 
 app.use(express.json());
 app.use(passport.initialize());
@@ -15,7 +21,7 @@ app.use(passport.initialize());
 // CORS
 app.use((req, res, next) => {
     res.set({
-        'Access-Control-Allow-Origin': config.frontendUrl,
+        'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'POST, GET',
         'Access-Control-Allow-Headers': '*',
     });
@@ -36,9 +42,10 @@ app.use((err, req, res, next) => {
 // start app
 db.connect(() => {
     db.syncAll(() => // TODO: only for developing
-        app.listen(config.port, () =>
+        server.listen(config.port, () =>
             console.info(`Server is started on port ${config.port}!`)));
 });
+
 
 process.on('SIGINT', (code) => {
     console.log('Server is stopped!');

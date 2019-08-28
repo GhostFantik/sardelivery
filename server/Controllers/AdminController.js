@@ -6,7 +6,7 @@ const passport = require('passport');
 const config = require('../config');
 
 // const AdminService = require('../Services/AdminService');
-
+//
 // router.post('/add', (req, res) => {
 //     const r = AdminService.addAdmin(req.body);
 //     console.log('Return ' + r);
