@@ -5,5 +5,5 @@
     "version": "5.101",
     "LPAwait": "25"
   },
-  "server": "http://localhost:3000"
+  "server": "http://192.168.99.100:3000"
 }

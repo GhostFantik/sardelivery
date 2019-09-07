@@ -38,12 +38,22 @@ app.use((err, req, res, next) => {
     console.log(err);
     res.status(500).end();
 });
-
+server.on('error', e => console.log('GGG: ' + e));
 // start app
 db.connect(() => {
-    db.syncAll(() => // TODO: only for developing
-        server.listen(config.port, () =>
-            console.info(`Server is started on port ${config.port}!`)));
+    db.syncAll(() => { // TODO: only for developing
+        try {
+            console.log('CHECK');
+            server.listen(config.port, () => {
+                console.log(`Server is started on port ${config.port}!`);
+                console.log('CALLBACK!!!');
+            });
+            console.log(config.port);
+        }
+        catch (e) {
+            console.log(e);
+        }
+    });
 });
 
 

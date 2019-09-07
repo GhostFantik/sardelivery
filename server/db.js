@@ -20,7 +20,7 @@ exports.connect = function (callback) {
     sequelize.authenticate()
         .then(() => {
             console.log('Database connection is successful!');
-            ModelInitializer.init(sequelize);
+             ModelInitializer.init(sequelize);
             callback();
         })
         .catch(err => console.log(`Error connection to DB: ${err}`));
