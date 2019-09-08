@@ -1,7 +1,11 @@
 FROM node as node
 WORKDIR /app
-ADD . /app
-RUN npm i && npm run build
+
+COPY ./package*.json /app
+RUN npm i
+
+COPY . /app
+RUN npm run build
 
 FROM nginx as nginx
 RUN mkdir /app
