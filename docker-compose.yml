@@ -12,8 +12,8 @@ services:
   #frontend:
    # build: ./frontend
    # restart: always
-     depends_on:
-       - server
+   #  depends_on:
+   #    - server
    # ports:
    #   - "80:80"
   vk:
