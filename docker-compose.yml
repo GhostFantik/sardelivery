@@ -5,10 +5,11 @@ services:
     restart: always
     environment:
       - POSTGRES_DB=deliveryDB
+      - POSTGRES_PASSWORD=123456SarDelivery
     volumes: 
       - ./db:/var/lib/postgresql/data
-    #ports:
-      #- "5432:5432"
+    ports:
+      - "5432:5432"
   frontend:
     build: ./frontend
     restart: always
