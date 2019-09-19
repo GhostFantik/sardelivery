@@ -5,7 +5,7 @@ const keyboards = require('./keyboards');
 
 exports.initialize = function () {
     commandsManager.on('/start', async data => {
-        if (orderManager.getUserStatus(data) !== -1){
+        if (orderManager.getUserStatus(data) === -1){
             const response = await methodsManager.sendMessage({
                 id: data.from_id,
                 text: `Привет! 
@@ -16,12 +16,12 @@ exports.initialize = function () {
         else {
             const response = await methodsManager.sendMessage({
                 id: data.from_id,
-                text: `Вы уже в процессе оформления заказа!`,
+                text: `Вы уже в процессе оформления заказа! Если это не так, то обратитесь к Администратору!`,
             });
         }
     });
     commandsManager.on('/order', async data => {
-        if (orderManager.getUserStatus !== -1){
+        if (orderManager.getUserStatus(data) !== -1){
             await methodsManager.sendMessage({
                 id: data.from_id,
                 text: `Вы уже в стадии оформления заказа!`,
@@ -38,11 +38,12 @@ exports.initialize = function () {
     commandsManager.on('/help', async data => {
         const response = await methodsManager.sendMessage({
             id: data.from_id,
-            text: 'Напишите /start для начала работы!',
+            text: `Напишите /start для начала работы!
+                Администратор по технической части: vk.com/ghostfantik`,
         })
     });
     commandsManager.on('/cancel', async data => {
-        if (orderManager.getUserStatus === -1){
+        if (orderManager.getUserStatus(data) === -1){
             await methodsManager.sendMessage({
                 id: data.from_id,
                 text: `Вы не оформляли заказ!`,
@@ -56,7 +57,7 @@ exports.initialize = function () {
         }, keyboards.start);
     });
     commandsManager.on('/confirm', async data => {
-        if (orderManager.getUserStatus !== 4){
+        if (orderManager.getUserStatus(data) !== 4){
             await methodsManager.sendMessage({
                 id: data.from_id,
                 text: `В данный момент невозможно подтвердить заказ! Возможно ваш заказ находится в режиме 
