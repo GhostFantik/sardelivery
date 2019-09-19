@@ -5,7 +5,7 @@ const replies = require('./Bot/replies');
 let users = {};
 exports.getUserStatus = function (data) {
     if (data.from_id in users)
-        return users.stage;
+        return users[data.from_id].stage;
     else
         return -1
 };
