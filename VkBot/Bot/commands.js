@@ -16,7 +16,9 @@ exports.initialize = function () {
         else {
             const response = await methodsManager.sendMessage({
                 id: data.from_id,
-                text: `Вы уже в процессе оформления заказа! Если это не так, то обратитесь к Администратору!`,
+                text: `Вы уже в процессе оформления заказа! Если это не так, то обратитесь к Администратору!
+                Информация для администратора:
+                Status: ${orderManager.getUserStatus(data)}`,
             });
         }
     });
@@ -32,7 +34,9 @@ exports.initialize = function () {
         await methodsManager.sendMessage({
             id: data.from_id,
             text: `Внимание! Началась процедура оформления заказа!
-       Укажите адрес доставки ОДНИМ сообщением!`,
+       Укажите адрес доставки ОДНИМ сообщением!
+       Информация для администратора:
+                Status: ${orderManager.getUserStatus(data)}`,
         }, keyboards.order);
     });
     commandsManager.on('/help', async data => {
@@ -46,7 +50,9 @@ exports.initialize = function () {
         if (orderManager.getUserStatus(data) === -1){
             await methodsManager.sendMessage({
                 id: data.from_id,
-                text: `Вы не оформляли заказ!`,
+                text: `Вы не оформляли заказ!
+                Информация для администратора:
+                Status: ${orderManager.getUserStatus(data)}`,
             });
             return;
         }
@@ -61,7 +67,10 @@ exports.initialize = function () {
             await methodsManager.sendMessage({
                 id: data.from_id,
                 text: `В данный момент невозможно подтвердить заказ! Возможно ваш заказ находится в режиме 
-                подтверждения администратором, или вы не прошли процедуру оформления заказа!`,
+                подтверждения администратором, или вы не прошли процедуру оформления заказа!
+                
+                Информация для администратора:
+                Status: ${orderManager.getUserStatus(data)}`,
             });
             return;
         }
