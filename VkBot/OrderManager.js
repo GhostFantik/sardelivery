@@ -67,6 +67,7 @@ exports.completeOrder = function (order) {
     if (order.vkId in users) {
         users[order.vkId].stage = 6;
         replies.completeOrder(order.vkId);
+        delete users[order.vkId];
     }
 };
 exports.rejectOrderByAdmin = function (order) {
