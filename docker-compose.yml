@@ -3,6 +3,9 @@ services:
   db: 
     image: postgres
     restart: always
+    environment:
+      - POSTGRES_DB=deliveryDB
+      - POSTGRES_PASSWORD=123456SarDelivery
     volumes: 
       - ./db:/var/lib/postgresql/data
     ports:
@@ -10,11 +13,15 @@ services:
   frontend:
     build: ./frontend
     restart: always
+    depends_on:
+      - server
     ports:
       - "80:80"
   vk:
     build: ./VkBot
     restart: always
+    depends_on:
+      - server
   server:
     build: ./server
     restart: always
