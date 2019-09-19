@@ -4,7 +4,7 @@ let commands = {};
 let noCommandHandlers = [];
 let otherCommandsHandlers = [];
 lp.on('message_new', data => {
-    if (data.object.peer_id === data.object.from_id)
+    if (data.object.peer_id !== data.object.from_id)
         return;
         
     if ('payload' in data.object) { // for keyboard
