@@ -1,6 +1,7 @@
 const methods = require('./VkAPI/methodsManager');
 const OrderEmitter = require('./Socket.IO/Emitters/OrderEmitter');
 const replies = require('./Bot/replies');
+const notification = require('./AdminNotification');
 
 let users = {};
 exports.getUserStatus = function (data) {
@@ -20,6 +21,7 @@ exports.addOrder = async function (data) {
         paymentMethod: '-',
         stage: 0,
     };
+    notification.newOrder(data);
 };
 exports.fillOrder = function (data) {
     if (data.from_id in users) {
