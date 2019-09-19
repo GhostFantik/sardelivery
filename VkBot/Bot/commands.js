@@ -26,7 +26,9 @@ exports.initialize = function () {
         if (orderManager.getUserStatus(data) !== -1){
             await methodsManager.sendMessage({
                 id: data.from_id,
-                text: `Вы уже в стадии оформления заказа!`,
+                text: `Вы уже в стадии оформления заказа!
+                Информация для администратора:
+                Status: ${orderManager.getUserStatus(data)}`,
             });
             return;
         }
@@ -34,9 +36,7 @@ exports.initialize = function () {
         await methodsManager.sendMessage({
             id: data.from_id,
             text: `Внимание! Началась процедура оформления заказа!
-       Укажите адрес доставки ОДНИМ сообщением!
-       Информация для администратора:
-                Status: ${orderManager.getUserStatus(data)}`,
+                    Укажите адрес доставки ОДНИМ сообщением!`,
         }, keyboards.order);
     });
     commandsManager.on('/help', async data => {
