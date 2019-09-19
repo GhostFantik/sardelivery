@@ -40,6 +40,7 @@ exports.startLongPollServer = async function (obj) {
  * @param obj
  * @param obj.id userId
  * @param obj.text Text
+ * @param obj.chatId ChatId
  * @param keyboard Keyboard
  * @returns {Promise<void>}
  */
@@ -47,6 +48,7 @@ exports.sendMessage = async function(obj, keyboard={}){
     const jsonKeyboard = JSON.stringify(keyboard);
     const response = await sendMethod('messages.send', {
         peer_id : obj.id,
+        chat_id: obj.chatId,
         random_id : Math.floor(Math.random() * 9000000),
         message : obj.text,
         keyboard: jsonKeyboard,
