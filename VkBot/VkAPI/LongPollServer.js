@@ -6,7 +6,6 @@ let callbackPool = {
 
 exports.start = async function() {
     let lpData = (await vk.getLongPollServer()).response;
-    print('LPDATA: ', lpData);
     while (true) {
         const response = await vk.startLongPollServer({
             key: lpData.key,
@@ -14,6 +13,7 @@ exports.start = async function() {
             ts: lpData.ts,
         });
         lpData.ts = response.ts;
+        console.log('Respone updates: ', response.updates);
         if (Array.isArray(response.updates)) {
             for (const update of response.updates) {
                 if (update.type === 'message_new'){
