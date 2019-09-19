@@ -4,6 +4,10 @@ let commands = {};
 let noCommandHandlers = [];
 let otherCommandsHandlers = [];
 lp.on('message_new', data => {
+    if ('peer_id' in data.object){
+        if (data.object.peer_id === '2000000001')
+            return;
+    }
     if ('payload' in data.object) { // for keyboard
         const payload = JSON.parse(data.object.payload);
         if ('command' in payload){
