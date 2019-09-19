@@ -46,6 +46,10 @@ exports.startLongPollServer = async function (obj) {
  */
 exports.sendMessage = async function(obj, keyboard={}){
     const jsonKeyboard = JSON.stringify(keyboard);
+    if (obj.id === undefined)
+        obj.id = '';
+    if (obj.chatId === undefined)
+        obj.chatId = '';
     const response = await sendMethod('messages.send', {
         peer_id : obj.id,
         chat_id: obj.chatId,
