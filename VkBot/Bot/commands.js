@@ -5,14 +5,29 @@ const keyboards = require('./keyboards');
 
 exports.initialize = function () {
     commandsManager.on('/start', async data => {
-        const response = await methodsManager.sendMessage({
-            id: data.from_id,
-            text: `Привет! 
-        Чтобы оформить доставку нажми на кнопку "Заказать" или введи команду /order
-        Для отмены заказа введи команду /cancel`,
-        }, keyboards.start);
+        if (orderManager.getUserStatus(data) !== -1){
+            const response = await methodsManager.sendMessage({
+                id: data.from_id,
+                text: `Привет! 
+            Чтобы оформить доставку нажми на кнопку "Заказать" или введи команду /order
+            Для отмены заказа введи команду /cancel`,
+            }, keyboards.start);
+        }
+        else {
+            const response = await methodsManager.sendMessage({
+                id: data.from_id,
+                text: `Вы уже в процессе оформления заказа!`,
+            });
+        }
     });
     commandsManager.on('/order', async data => {
+        if (orderManager.getUserStatus !== -1){
+            await methodsManager.sendMessage({
+                id: data.from_id,
+                text: `Вы уже в стадии оформления заказа!`,
+            });
+            return;
+        }
         await orderManager.addOrder(data);
         await methodsManager.sendMessage({
             id: data.from_id,
@@ -27,6 +42,13 @@ exports.initialize = function () {
         })
     });
     commandsManager.on('/cancel', async data => {
+        if (orderManager.getUserStatus === -1){
+            await methodsManager.sendMessage({
+                id: data.from_id,
+                text: `Вы не оформляли заказ!`,
+            });
+            return;
+        }
         orderManager.cancelOrder(data);
         const response = await methodsManager.sendMessage({
             id: data.from_id,
@@ -34,6 +56,14 @@ exports.initialize = function () {
         }, keyboards.start);
     });
     commandsManager.on('/confirm', async data => {
+        if (orderManager.getUserStatus !== 4){
+            await methodsManager.sendMessage({
+                id: data.from_id,
+                text: `В данный момент невозможно подтвердить заказ! Возможно ваш заказ находится в режиме 
+                подтверждения администратором, или вы не прошли процедуру оформления заказа!`,
+            });
+            return;
+        }
         orderManager.confirmOrder(data);
         const response = await methodsManager.sendMessage({
             id: data.from_id,

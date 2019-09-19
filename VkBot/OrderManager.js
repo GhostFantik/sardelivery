@@ -3,7 +3,12 @@ const OrderEmitter = require('./Socket.IO/Emitters/OrderEmitter');
 const replies = require('./Bot/replies');
 
 let users = {};
-
+exports.getUserStatus = function (data) {
+    if (data.from_id in users)
+        return users.stage;
+    else
+        return -1
+};
 exports.addOrder = async function (data) {
     if (data.from_id in users) delete users[data.from_id];
     const userInfo = await methods.getUser(data.from_id);
