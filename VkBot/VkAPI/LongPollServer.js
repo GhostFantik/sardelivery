@@ -13,7 +13,7 @@ exports.start = async function() {
             ts: lpData.ts,
         });
         lpData.ts = response.ts;
-        console.log('Respone updates: ', response.updates);
+        console.log('Respone updates: ', response);
         if (Array.isArray(response.updates)) {
             for (const update of response.updates) {
                 if (update.type === 'message_new'){
