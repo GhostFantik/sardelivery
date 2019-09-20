@@ -21,7 +21,6 @@ exports.addOrder = async function (data) {
         paymentMethod: '-',
         stage: 0,
     };
-    notification.newOrder(data);
 };
 exports.fillOrder = function (data) {
     if (data.from_id in users) {
@@ -33,6 +32,7 @@ exports.fillOrder = function (data) {
         else if (users[data.from_id].stage === 1) {
             users[data.from_id].body = data.text;
             users[data.from_id].stage = 2;
+            notification.newOrder(users[data.from_id]);
             OrderEmitter.addOrder(users[data.from_id]);
             return 2;
         }
@@ -43,12 +43,14 @@ exports.cancelOrder = function (data) {
     if (data.from_id in users) {
         if ('serverId' in users[data.from_id])
             OrderEmitter.rejectOrderByClient(users[data.from_id]);
+        notification.cancelOrder(users[data.from_id]);
         delete users[data.from_id];
     }
 };
 exports.confirmOrder = function (data) {
     if (data.from_id in users) {
         users[data.from_id].stage = 5;
+        notification.confirmOrder(users[data.from_id]);
         OrderEmitter.confirmOrder(users[data.from_id]);
     }
 };
