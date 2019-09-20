@@ -80,6 +80,12 @@ exports.initialize = function () {
             text: 'Заказ принят в исполнение!'
         }, keyboards.confirm);
     });
+    commandsManager.on('/report', async data => {
+        await methodsManager.sendMessage({
+            id: data.from_id,
+            text: `Администратор: vk.com/ghostfantik`,
+        });
+    });
     commandsManager.on('nocmd', async data => {
         const code = orderManager.fillOrder(data);
         if (code === 1) await methodsManager.sendMessage({
