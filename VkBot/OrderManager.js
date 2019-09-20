@@ -41,9 +41,10 @@ exports.fillOrder = function (data) {
 };
 exports.cancelOrder = function (data) {
     if (data.from_id in users) {
-        if ('serverId' in users[data.from_id])
-            OrderEmitter.rejectOrderByClient(users[data.from_id]);
-        notification.cancelOrder(users[data.from_id]);
+        if ('serverId' in users[data.from_id]) {
+            notification.cancelOrder(users[data.from_id]);
+        }
+        OrderEmitter.rejectOrderByClient(users[data.from_id]);
         delete users[data.from_id];
     }
 };
@@ -54,18 +55,18 @@ exports.confirmOrder = function (data) {
         OrderEmitter.confirmOrder(users[data.from_id]);
     }
 };
-exports.setServerId = function(order) {
+exports.setServerId = function (order) {
     if (order.vkId in users) {
         users[order.vkId].serverId = order.id;
     }
 };
 exports.setPriceOrder = function (order) {
-  if (order.vkId in users) {
-      users[order.vkId].price = order.price;
-      users[order.vkId].stage = 4;
-      replies.setPrice(order.vkId, order.price);
-  }
-  // TODO: make error sending to server!
+    if (order.vkId in users) {
+        users[order.vkId].price = order.price;
+        users[order.vkId].stage = 4;
+        replies.setPrice(order.vkId, order.price);
+    }
+    // TODO: make error sending to server!
 };
 exports.completeOrder = function (order) {
     if (order.vkId in users) {
