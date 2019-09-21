@@ -14,7 +14,7 @@ exports.start = async function () {
         });
         if ('failed' in response) {
             if (response.failed === 2) {
-                lpData.key = (await vk.getLongPollServer().response).key;
+                lpData.key = (await vk.getLongPollServer()).response.key;
                 continue;
             }
             else if (response.failed === 3) {
