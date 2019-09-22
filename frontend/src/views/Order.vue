@@ -11,7 +11,7 @@
                   <h3>Описание: {{order.body}}</h3>
                   <h4>Адрес: {{order.address}}</h4>
                   <h5>Метод оплаты: {{order.paymentMethod}}</h5>
-                  <h5>Vk: <a href="vk.com/id{{order.vkId}}">click</a></h5>
+                  <h5>Vk: <a :href="getVk">click me</a></h5>
                   <h5>Статус: {{statusNames[order.status].name}}</h5>
                 </v-card-text>
               </v-flex>
@@ -129,6 +129,9 @@ export default {
           active: this.order.status === 2 || false,
         },
       ];
+    },
+    getVk() {
+      return ("https://vk.com/id" + this.order.vkId);
     },
   },
   watch: {
