@@ -77,7 +77,8 @@ exports.initialize = function () {
         orderManager.confirmOrder(data);
         const response = await methodsManager.sendMessage({
             id: data.from_id,
-            text: 'Заказ принят в исполнение!'
+            text: `Заказ принят в исполнение!
+                    Внимание! Оставайтесь онлайн до получения заказа!`
         }, keyboards.confirm);
     });
     commandsManager.on('/report', async data => {

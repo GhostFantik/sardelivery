@@ -12,7 +12,7 @@ exports.setPrice = function (vkId, price) {
 exports.completeOrder = function (vkId) {
   methodsManager.sendMessage({
       id: vkId,
-      text: `Заказ выполнен! Обращайтесь к нам ещё!`
+      text: `Курьер прибыл! Заберите ваш заказ!`
   }, keyboards.start);
 };
 exports.rejectOrderByAdmin = function (vkId, reason) {

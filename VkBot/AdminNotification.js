@@ -6,7 +6,7 @@ exports.newOrder = async function (order) {
         chatId: config.Vk.chat_id,
         text: `Внимание! Новый заказ! Срочно обработать!
                 Данные заказа: 
-                    vkId - ${order.vkId}
+                    vk - vk.com/id${order.vkId}
                     Name - ${order.name}
                     Address - ${order.address}
                     Body - ${order.body}
@@ -18,7 +18,7 @@ exports.cancelOrder = async function (order) {
         chatId: config.Vk.chat_id,
         text: `Внимание! Заказ ОТМЕНЁН!
                 Данные заказа:
-                    vkId - ${order.vkId}
+                    vk - vk.com/id${order.vkId}
                     Name - ${order.name}
                     Address - ${order.address}
                     Body - ${order.body}
@@ -30,7 +30,7 @@ exports.confirmOrder = async function (order) {
         chatId: config.Vk.chat_id,
         text: `Внимание! Клиент ПОДТВЕРДИЛ заказ!
                 Данные заказа:
-                    vkId - ${order.vkId}
+                    vk - vk.com/id${order.vkId}
                     Name - ${order.name}
                     Address - ${order.address}
                     Body - ${order.body}
